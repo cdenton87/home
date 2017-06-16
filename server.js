@@ -1,7 +1,6 @@
-var express = require('express');
-var app = express();
-app.get('/', function(req, res) {
-  res.send('Hello Seattle\n');
-});
-app.listen(port);
-console.log('Listening on port 3001...');
+var http = require('http');
+var port = process.env.port || 1337;
+http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.send(JSON.stringify({ a: 1 }, null, 3));
+}).listen(port);

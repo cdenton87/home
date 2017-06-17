@@ -35,12 +35,8 @@ http.createServer(function (req, res) {
 }).listen(port);
 
 function displayForm(res) {
-    fs.readFile('form.html', function (err, data) {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-                'Content-Length': data.length
-        });
-        res.write(data);
-        res.end();
+    fs.readFile('form.html', function (err, text) {
+        res.setHeader("Content-Type", "text/html");
+        res.end(text);
     });
 };

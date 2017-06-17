@@ -1,6 +1,9 @@
 var azure = require('azure-storage');
 var http = require('http');
 var log4js = require('log4js');
+var FormData = require('form-data');
+
+var form = new FormData();
 
 log4js.loadAppender('file');
 log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
@@ -26,8 +29,7 @@ http.createServer(function (req, res) {
 		return;
 	}
 	if (req.url == "/form") {
-		displayForm(res);
-		return;
+		form.append('my_field', 'my value');
 	}
 	
 	res.writeHead(200, {'Content-Type': 'text/plain'});

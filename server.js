@@ -3,6 +3,7 @@ var http = require('http');
 var log4js = require('log4js');
 var formidable = require('formidable');
 var fs = require('fs');
+var azureTable = require('azure-table-node')
 
 log4js.loadAppender('file');
 log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
@@ -12,6 +13,7 @@ logger.info('Logging setup successfully.');
 
 var blobSvc = azure.createBlobService();
 var tableSvc = azure.createTableService();
+var client = azureTable.getDefaultClient();
 
 tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
   if(!error){
@@ -45,11 +47,24 @@ http.createServer(function (req, res) {
 		form.parse(req, function (err, fields, files) {
 			insertDB(fields.account, fields.row, fields.quote);
 			res.writeHead(200, {'Content-Type': 'text/plain'});
-			tableSvc.retrieveEntity('knightapi', fields.account, fields.row, function(error, result, response){
+			/*tableSvc.retrieveEntity('knightapi', fields.account, fields.row, function(error, result, response){
 				if(!error){
 					// result contains the entity
 				}
 				res.end(result);
+			});*/
+			client.queryEntities('knightapi', {
+				query: azureTable.Query.create('PartitionKey', '==', fields.account) 
+			}, function (err, data, continuation) {
+				if (err) {
+					res.writeHead(500, { 'Content-Type': 'text/plain' });
+					res.write("Got error :-( " + err);
+					res.end("");
+					return;
+				}
+				var json = JSON.stringify(data);
+				res.writeHead(200, { 'Content-Type': 'text/plain' })
+				res.end("Table displayed: " + json);
 			});
 			res.end('Successfully Updated Quote');
 			return res.end();

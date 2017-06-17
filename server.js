@@ -3,11 +3,10 @@ var http = require('http');
 var log4js = require('log4js');
 
 log4js.loadAppender('file');
-log4js.addAppender(log4js.appenders.file('logs/knightapi.log'), 'knightlogger');
+log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
 var logger = log4js.getLogger('knightlogger');
 logger.setLevel('DEBUG');
 logger.info('Logging setup successfully.');
-console.log("My trace statement");
 
 /*var tableSvc = azure.createTableService();
 tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
@@ -20,8 +19,23 @@ tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
 
 var port = process.env.port || 1337;
 http.createServer(function (req, res) {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ quoteMon: "To be or not to be", quoteTues: 1, quoteWed: 1, quoteThurs: 1, quoteFri: 1, quoteSat: 1, quoteSun: 1 }, null, 3));
-	console.log("Web Request");
+	if (req.url == "/api") {
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		res.writeHead(200, { 'Content-Type': 'application/json' });
+		res.end(JSON.stringify({ quoteMon: "To be or not to be", quoteTues: 1, quoteWed: 1, quoteThurs: 1, quoteFri: 1, quoteSat: 1, quoteSun: 1 }, null, 3));
+	}
+	if (req.url == "/form") {
+		displayForm(res);
+	}
 }).listen(port);
+
+function displayForm(res) {
+    fs.readFile('form.html', function (err, data) {
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+                'Content-Length': data.length
+        });
+        res.write(data);
+        res.end();
+    });
+};

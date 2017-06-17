@@ -30,6 +30,7 @@ http.createServer(function (req, res) {
 	}
 	if (req.url == "/form") {
 		form.append('my_field', 'my value');
+		return;
 	}
 	
 	res.writeHead(200, {'Content-Type': 'text/plain'});

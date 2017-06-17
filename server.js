@@ -42,13 +42,9 @@ http.createServer(function (req, res) {
 	if (req.url == '/uploadquote') {
 		var form = new formidable.IncomingForm();
 		form.parse(req, function (err, fields, files) {
-			var oldpath = files.filetoupload.path;
-			var newpath = '/' + files.filetoupload.name;
-			fs.rename(oldpath, newpath, function (err) {
-				if (err) throw err;
-				res.write('File uploaded and moved!');
-				return res.end();
-			});
+			res.writeHead(200, {'Content-Type': 'text/plain'});
+			res.end(fields.quote);
+			return res.end();
 		});
 	}
 	

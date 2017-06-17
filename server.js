@@ -7,14 +7,14 @@ var log4js = require('log4js');
 //var logger = log4js.getLogger('knightlogger');
 //logger.setLevel('DEBUG');
 
-var tableSvc = azure.createTableService();
+/*var tableSvc = azure.createTableService();
 tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
   if(!error){
 	  //logger.info('Table creation not required, table has already been created.');
   } else {
 	  //logger.info('New table called knightapi has been created.');
   }
-});
+});*/
 
 var port = process.env.port || 1337;
 http.createServer(function (req, res) {

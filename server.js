@@ -21,6 +21,7 @@ tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
   }
 });
 
+
 var port = process.env.port || 1337;
 http.createServer(function (req, res) {
 	if (req.url == "/api") {
@@ -31,13 +32,14 @@ http.createServer(function (req, res) {
 	}
 	if (req.url == "/form") {
 		res.writeHead(200, {'Content-Type': 'text/html'});
-		res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
-		res.write('<input type="file" name="filetoupload"><br>');
+		res.write('<form action="uploadquote" method="post" enctype="multipart/form-data">');
+		res.write('Quote: <input type="text" name="quote"><br>');
+		res.write('Account: <input type="text" name="account"><br>');
 		res.write('<input type="submit">');
 		res.write('</form>');
 		return res.end();
 	}
-	if (req.url == '/fileupload') {
+	if (req.url == '/uploadquote') {
 		var form = new formidable.IncomingForm();
 		form.parse(req, function (err, fields, files) {
 			var oldpath = files.filetoupload.path;

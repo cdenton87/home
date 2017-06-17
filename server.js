@@ -1,9 +1,8 @@
 var azure = require('azure-storage');
 var http = require('http');
 var log4js = require('log4js');
-var FormData = require('form-data');
-
-var form = new FormData();
+var formidable = require('formidable');
+var fs = require('fs');
 
 log4js.loadAppender('file');
 log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
@@ -36,14 +35,19 @@ http.createServer(function (req, res) {
 		res.write('</form>');
 		return res.end();
 	}
+	if (req.url == '/fileupload') {
+		var form = new formidable.IncomingForm();
+		form.parse(req, function (err, fields, files) {
+			var oldpath = files.filetoupload.path;
+			var newpath = '/' + files.filetoupload.name;
+			fs.rename(oldpath, newpath, function (err) {
+				if (err) throw err;
+				res.write('File uploaded and moved!');
+				res.end();
+			});
+		});
+	}
 	
 	res.writeHead(200, {'Content-Type': 'text/plain'});
 	res.end('Hello World\n');
 }).listen(port);
-
-function displayForm(res) {
-    fs.readFile('form.html', function (err, text) {
-        res.setHeader("Content-Type", "text/html");
-        res.end(text);
-    });
-};

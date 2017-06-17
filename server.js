@@ -66,8 +66,8 @@ http.createServer(function (req, res) {
 				res.writeHead(200, { 'Content-Type': 'text/plain' })
 				res.end("Table displayed: " + json);
 			});
-			res.end('Successfully Updated Quote');
-			return res.end();
+			//res.end('Successfully Updated Quote');
+			//return res.end();
 		});
 	}
 	/*if (req.url != "/api" || req.url != "/form" || req.url != "/uploadquote") {

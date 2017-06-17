@@ -35,7 +35,7 @@ http.createServer(function (req, res) {
 		res.write('<form action="uploadquote" method="post" enctype="multipart/form-data">');
 		res.write('Quote: <input type="text" name="quote"><br>');
 		res.write('Account: <input type="text" name="account"><br>');
-		res.write('Account: <input type="text" name="row"><br>');
+		res.write('Row: <input type="text" name="row"><br>');
 		res.write('<input type="submit">');
 		res.write('</form>');
 		return res.end();
@@ -55,10 +55,10 @@ http.createServer(function (req, res) {
 			return res.end();
 		});
 	}
-	if (req.url != "/api" || req.url != "/form" || req.url != "/uploadquote") {
+	/*if (req.url != "/api" || req.url != "/form" || req.url != "/uploadquote") {
 		res.writeHead(200, {'Content-Type': 'text/plain'});
 		res.end('Hello World\n');
-	}
+	}*/
 }).listen(port);
 
 function insertDB(Account, Row, Quote) {

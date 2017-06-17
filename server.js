@@ -10,6 +10,8 @@ var logger = log4js.getLogger('knightlogger');
 logger.setLevel('DEBUG');
 logger.info('Logging setup successfully.');
 
+var blobSvc = azure.createBlobService();
+
 /*var tableSvc = azure.createTableService();
 tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
   if(!error){

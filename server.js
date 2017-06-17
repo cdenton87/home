@@ -13,13 +13,13 @@ logger.info('Logging setup successfully.');
 var blobSvc = azure.createBlobService();
 var tableSvc = azure.createTableService();
 
-/*tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
+tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
   if(!error){
 	  //logger.info('Table creation not required, table has already been created.');
   } else {
 	  //logger.info('New table called knightapi has been created.');
   }
-});*/
+});
 
 var port = process.env.port || 1337;
 http.createServer(function (req, res) {

@@ -3,7 +3,7 @@ var http = require('http');
 var log4js = require('log4js');
 
 log4js.loadAppender('file');
-log4js.addAppender(log4js.appenders.file('logs/knightapi.log'), 'knightlogger');
+log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
 var logger = log4js.getLogger('knightlogger');
 logger.setLevel('DEBUG');
 

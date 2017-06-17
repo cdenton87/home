@@ -23,10 +23,15 @@ http.createServer(function (req, res) {
 		res.setHeader('Access-Control-Allow-Origin', '*');
 		res.writeHead(200, { 'Content-Type': 'application/json' });
 		res.end(JSON.stringify({ quoteMon: "To be or not to be", quoteTues: 1, quoteWed: 1, quoteThurs: 1, quoteFri: 1, quoteSat: 1, quoteSun: 1 }, null, 3));
+		return;
 	}
 	if (req.url == "/form") {
 		displayForm(res);
+		return;
 	}
+	
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.end('Hello World\n');
 }).listen(port);
 
 function displayForm(res) {

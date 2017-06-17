@@ -35,6 +35,7 @@ http.createServer(function (req, res) {
 		res.write('<form action="uploadquote" method="post" enctype="multipart/form-data">');
 		res.write('Quote: <input type="text" name="quote"><br>');
 		res.write('Account: <input type="text" name="account"><br>');
+		res.write('Account: <input type="text" name="row"><br>');
 		res.write('<input type="submit">');
 		res.write('</form>');
 		return res.end();
@@ -42,12 +43,33 @@ http.createServer(function (req, res) {
 	if (req.url == '/uploadquote') {
 		var form = new formidable.IncomingForm();
 		form.parse(req, function (err, fields, files) {
+			insertDB(fields.account, fields.row, fields.quote);
 			res.writeHead(200, {'Content-Type': 'text/plain'});
-			res.end(fields.quote);
+			tableSvc.retrieveEntity('mytable', fields.account, fields.row, function(error, result, response){
+				if(!error){
+					// result contains the entity
+				}
+				res.end(result);
+			});
+			res.end('Successfully Updated Quote');
 			return res.end();
 		});
 	}
-	
-	//res.writeHead(200, {'Content-Type': 'text/plain'});
-	//res.end('Hello World\n');
+	if (req.url != "/api" || req.url != "/form" || req.url != "/uploadquote") {
+		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.end('Hello World\n');
+	}
 }).listen(port);
+
+function insertDB(Account, Row, Quote) {
+	var task = {
+		PartitionKey: {'_':Account},
+		RowKey: {'_': Row},
+		message: {'_':Quote},
+	};
+	tableSvc.insertEntity('knightapi',task, function (error, result, response) {
+		if(!error){
+			// Entity inserted
+		}
+	});
+};

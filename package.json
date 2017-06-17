@@ -4,6 +4,7 @@
   "author": "Christopher Denton",
   "license": "ISC",
   "dependencies" : {
-    "azure-storage": "2.1.0"
+    "azure-storage": "2.1.0",
+	"log4js": "1.1.0",
   }
 }

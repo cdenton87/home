@@ -45,7 +45,7 @@ http.createServer(function (req, res) {
 		form.parse(req, function (err, fields, files) {
 			insertDB(fields.account, fields.row, fields.quote);
 			res.writeHead(200, {'Content-Type': 'text/plain'});
-			tableSvc.retrieveEntity('mytable', fields.account, fields.row, function(error, result, response){
+			tableSvc.retrieveEntity('knightapi', fields.account, fields.row, function(error, result, response){
 				if(!error){
 					// result contains the entity
 				}

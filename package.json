@@ -2,9 +2,8 @@
   "name": "KNiGhT-api-test",
   "version": "1.0.0",
   "author": "Christopher Denton",
-  "license": "ISC",
   "dependencies" : {
     "azure-storage": "2.1.0",
-	"log4js": "1.1.0",
+	"log4js": "1.1.0"
   }
 }

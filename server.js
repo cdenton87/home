@@ -2,17 +2,17 @@ var azure = require('azure-storage');
 var http = require('http');
 var log4js = require('log4js');
 
-log4js.loadAppender('file');
-log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
-var logger = log4js.getLogger('knightlogger');
-logger.setLevel('DEBUG');
+//log4js.loadAppender('file');
+//log4js.addAppender(log4js.appenders.file('knightapi.log'), 'knightlogger');
+//var logger = log4js.getLogger('knightlogger');
+//logger.setLevel('DEBUG');
 
 var tableSvc = azure.createTableService();
 tableSvc.createTableIfNotExists('knightapi', function(error, result, response){
   if(!error){
-	  logger.info('Table creation not required, table has already been created.');
+	  //logger.info('Table creation not required, table has already been created.');
   } else {
-	  logger.info('New table called knightapi has been created.');
+	  //logger.info('New table called knightapi has been created.');
   }
 });
 
